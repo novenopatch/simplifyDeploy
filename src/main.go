@@ -20,8 +20,18 @@ type Config struct {
 	} `json:"commands"`
 }
 
+func directoryExists(dir string) bool {
+	_, err := os.Stat(dir)
+	return !os.IsNotExist(err)
+}
+
 func runCommand(wg *sync.WaitGroup, dir string, command []string, forceProduction bool, results chan<- string) {
 	defer wg.Done()
+
+	if !directoryExists(dir) {
+		results <- fmt.Sprintf("Directory %s does not exist", dir)
+		return
+	}
 
 	if forceProduction && os.Getenv("APP_ENV") == "production" {
 		command = append(command, "--force")
@@ -56,6 +66,11 @@ func main() {
 
 	for _, dir := range config.Directories {
 		fullDir := filepath.Join(config.BaseDir, dir)
+
+		if !directoryExists(fullDir) {
+			fmt.Printf("Directory %s does not exist, skipping...\n", fullDir)
+			continue
+		}
 
 		for _, cmd := range config.Commands {
 			wg.Add(1)

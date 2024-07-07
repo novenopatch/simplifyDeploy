@@ -1,0 +1,32 @@
+{
+  "basedir": "/home/u882585955/domains/sigrecette.com",
+  "directories": [
+    "",
+    "bassar1",
+    "blitta1",
+    "doufelgounou1",
+    "oti1",
+    "otisud1",
+    "dankpen1",
+    "mo2",
+    "sotouboua2",
+    "est-mono1",
+    "wawa1",
+    "haho1",
+    "agou1",
+    "ave2",
+    "vo2",
+    "lacs1"
+  ],
+  "commands": [
+    {
+      "name": "git pull",
+      "command": ["git", "pull"]
+    },
+    {
+      "name": "update database",
+      "command": ["/opt/cloudlinux/alt-php82/root/usr/bin/php", "artisan", "migrate"],
+      "forceProduction": true
+    }
+  ]
+}
