@@ -33,7 +33,7 @@ func runCommand(wg *sync.WaitGroup, dir string, command []string, forceProductio
 		return
 	}
 
-	if forceProduction && os.Getenv("APP_ENV") == "production" {
+	if forceProduction || os.Getenv("APP_ENV") == "production" {
 		command = append(command, "--force")
 	}
 
